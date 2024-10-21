@@ -76,7 +76,7 @@ namespace Blog.Controllers
             }
         }
         [HttpDelete("{id}")]
-        public ActionResult Delete(Guid id)
+        public ActionResult<object> Delete(Guid id)
         {
             using (var context = new BlogDbContext())
             {
@@ -85,9 +85,9 @@ namespace Blog.Controllers
                 {
                     context.Bloggers.Remove(selectedBlogger);
                     context.SaveChanges();
-                    return StatusCode(200);
+                    return StatusCode(200 , new {message = "Sikeresen törölve." });
                 }
-                return BadRequest();
+                return NotFound(new {message = "Sikertelen törlés."});
 
             }
         }
