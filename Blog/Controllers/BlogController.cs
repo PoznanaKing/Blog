@@ -42,7 +42,21 @@ namespace Blog.Controllers
                 return BadRequest();
             
             }
+        }
+        [HttpGet("{id}")]
+        public ActionResult<Blogger> GetById(Guid id)
+        {
+            using (var context = new BlogDbContext())
+            {
+                var blogg = context.Bloggers.FirstOrDefault(b => b.Id == id);
+                if (blogg != null)
+                {
+                    return StatusCode(200, blogg);
+                }
+                return NotFound();
+                
+            }
+        }
     }
-    }
-    
+
 }
