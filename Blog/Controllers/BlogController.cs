@@ -75,6 +75,22 @@ namespace Blog.Controllers
                 
             }
         }
+        [HttpDelete("{id}")]
+        public ActionResult Delete(Guid id)
+        {
+            using (var context = new BlogDbContext())
+            {
+                var selectedBlogger=context.Bloggers.FirstOrDefault(y=>y.Id == id);
+                if(selectedBlogger != null)
+                {
+                    context.Bloggers.Remove(selectedBlogger);
+                    context.SaveChanges();
+                    return StatusCode(200);
+                }
+                return BadRequest();
+
+            }
+        }
     }
 
 }
